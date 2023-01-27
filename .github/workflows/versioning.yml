@@ -59,9 +59,9 @@ jobs:
         fi
         # service change calculation with diff - ideally use something like 'plz' or 'bazel'
         if [ "$(git diff "${DIFF_SOURCE}" "${DIFF_DEST}" --name-only | grep -o '^common/' > /dev/null && echo 'common changed')" = 'common changed' ]; then
-          changed_services=`ls -1 apps | xargs -n 1 printf 'apps/%s\n'`
+          changed_services=`ls -1 src | xargs -n 1 printf 'src/%s\n'`
         else
-          changed_services=`git diff "${DIFF_SOURCE}" "${DIFF_DEST}" --name-only | grep -o '^apps/[a-zA-Z-]*' | sort | uniq`
+          changed_services=`git diff "${DIFF_SOURCE}" "${DIFF_DEST}" --name-only | grep -o '^src/[a-zA-Z-]*' | sort | uniq`
         fi
         changed_services=$(printf '%s' "$changed_services" | jq --raw-input --slurp '.')
         echo "::set-output name=changed_services::$changed_services"
